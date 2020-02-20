@@ -1,0 +1,24 @@
+{
+  "name": "youtube-downloader",
+  "version": "0.0.1",
+  "description": "An electron application to download youtube videos",
+  "main": "index.js",
+  "scripts": {
+    "start": "electron .",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/uzair-ashraf/youtube-downloader.git"
+  },
+  "author": "Uzair Ashraf",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/uzair-ashraf/youtube-downloader/issues"
+  },
+  "homepage": "https://github.com/uzair-ashraf/youtube-downloader#readme",
+  "dependencies": {
+    "electron": "^8.0.1"
+  },
+  "devDependencies": {}
+}
