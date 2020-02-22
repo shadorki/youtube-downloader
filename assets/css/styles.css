@@ -1,0 +1,39 @@
+.container {
+  display: flex;
+  justify-content: center;
+}
+.app-logo-container {
+  text-align: center;
+}
+.app-logo {
+  height: 150px;
+  margin-top: 2rem;
+}
+.url-input {
+  border-radius: 20px;
+  border-style: none;
+  border: 1px solid black;
+  font-size: 1.3rem;
+  padding: 5px;
+}
+.youtube-search-form {
+  display: flex;
+  flex-direction: column;
+  margin-top: 2rem;
+}
+.search-button-container {
+  margin-top: 1.2rem;
+  text-align: center;
+}
+.search-button {
+  border-style: none;
+  font-size: 1.2rem;
+  border-radius: 25px;
+  padding: 12px;
+  background-color: darkred;
+  color: white;
+}
+.search-button:hover {
+  background-color: red;
+  cursor: pointer;
+}

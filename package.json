@@ -20,5 +20,7 @@
   "dependencies": {
     "electron": "^8.0.1"
   },
-  "devDependencies": {}
+  "devDependencies": {
+    "electron-reload": "^1.5.0"
+  }
 }
