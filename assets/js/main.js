@@ -1,4 +1,6 @@
 const axios = require('axios');
+const { ipcRenderer } = require('electron');
+const youtubedl = require('youtube-dl');
 
 let selectedVideo = null;
 
@@ -14,22 +16,28 @@ resetButton.addEventListener('submit', reset);
 function searchVideo (event) {
   event.preventDefault();
   const formData = new FormData(event.target);
-  const {1: url} = formData.get('url').split('?');
-  axios.get(`http://localhost:3001/video-info`, {
-    params: {
-      video: url
-    }
-  })
-  .then(displayThumbnail)
-  .catch(err => console.error(err))
+  const url = formData.get('url');
+  youtubedl.getInfo(url, null, (err, info) => {
+    if(err) console.error(err);
+    displayThumbnail(info);
+  } )
+  // axios.get(`http://localhost:3001/video-info`, {
+  //   params: {
+  //     video: url
+  //   }
+  // })
+  // .then(displayThumbnail)
+  // .catch(err => console.error(err))
 }
 
 function downloadVideo(event) {
+  event.preventDefault();
   console.log('we downloadin boi')
+  ipcRenderer.send('download-video', (event, selectedVideo))
 }
 
 function displayThumbnail(response) {
-  selectedVideo = response.data;
+  selectedVideo = response;
   const {title, thumbnail} = selectedVideo;
   thumbnailImage.src = thumbnail;
   thumbnailText.textContent = title;

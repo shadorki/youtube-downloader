@@ -5,13 +5,13 @@ require('electron-reload')(__dirname, {
 });
 
 
-const { app, BrowserWindow } = electron;
+const { app, BrowserWindow, dialog, ipcMain } = electron;
 
-
+let win;
 
 function createWindow () {
   // Create the browser window.
-  let win = new BrowserWindow({
+    win = new BrowserWindow({
     width: 800,
     height: 600,
     webPreferences: {
@@ -22,4 +22,16 @@ function createWindow () {
   // and load the index.html of the app.
   win.loadFile('index.html')
 }
+
+ipcMain.on('download-video', async (event, args) => {
+    try {
+      const result = await dialog.showOpenDialog(win, {
+        properties: ['openDirectory']
+      })
+      console.log('selected directories', result.filePaths)
+    } catch (err) {
+      console.error(err)
+    }
+})
+
 app.on('ready', createWindow)
