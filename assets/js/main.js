@@ -19,6 +19,8 @@ ipcRenderer.on('update-percentage', (event, arg) => {
 
 ipcRenderer.on('download-completed', downloadCompleted);
 
+ipcRenderer.on('directory-not-selected', resetDownload);
+
 function searchVideo (event) {
   event.preventDefault();
   setButtonToLoadingMode(searchButton);
@@ -77,6 +79,13 @@ function setButtonToLoadingMode(element) {
   element.disabled = true;
   element.classList.add('disabled')
   element.append(spinnerElement);
+}
+
+function resetDownload() {
+  resetButton.classList.remove('hidden');
+  searchButton.textContent = 'Download';
+  searchButton.disabled = false;
+  searchButton.classList.remove('disabled');
 }
 
 function updateProgress(percentage) {

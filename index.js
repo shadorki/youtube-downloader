@@ -58,7 +58,7 @@ ipcMain.on('download-video', async (event, args) => {
       const downloadLocation = fs.createWriteStream(`${filePath}/${args._filename}`)
       video.pipe(downloadLocation)
     } catch (err) {
-      console.error(err)
+      win.webContents.send('directory-not-selected');
     }
 })
 
