@@ -6,6 +6,7 @@ let selectedVideo = null;
 const searchForm = document.querySelector('.youtube-search-form');
 const thumbnailImage = document.querySelector('.thumbnail');
 const thumbnailText = document.querySelector('.thumbnail-text');
+const urlInput = document.querySelector('.url-input');
 const searchButton = document.querySelector('.search-button');
 const resetButton = document.querySelector('.reset-button');
 const loadingBarPercentage = document.querySelector('.loading-bar-percentage');
@@ -41,6 +42,7 @@ function downloadVideo(event) {
 
 function displayThumbnail(response) {
   selectedVideo = response;
+  urlInput.disabled = true;
   const {title, thumbnail} = selectedVideo;
   thumbnailImage.src = thumbnail;
   thumbnailText.textContent = title;
@@ -48,6 +50,7 @@ function displayThumbnail(response) {
 }
 function reset(event) {
   event.preventDefault();
+  urlInput.disabled = false;
   thumbnailImage.src = "./assets/images/logo-youtube.png";
   thumbnailText.textContent = '';
   loadingBarPercentage.textContent = '';
@@ -64,12 +67,12 @@ function reset(event) {
 }
 
 function switchMode() {
-    searchForm.removeEventListener('submit', searchVideo);
-    searchForm.addEventListener('submit', downloadVideo);
-    searchButton.textContent = 'Download';
-    searchButton.disabled = false;
-    searchButton.classList.remove('disabled');
-    resetButton.classList.remove('hidden');
+  searchForm.removeEventListener('submit', searchVideo);
+  searchForm.addEventListener('submit', downloadVideo);
+  searchButton.textContent = 'Download';
+  searchButton.disabled = false;
+  searchButton.classList.remove('disabled');
+  resetButton.classList.remove('hidden');
 }
 
 function setButtonToLoadingMode(element) {
