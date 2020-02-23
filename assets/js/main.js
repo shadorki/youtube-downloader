@@ -8,9 +8,14 @@ const thumbnailImage = document.querySelector('.thumbnail');
 const thumbnailText = document.querySelector('.thumbnail-text');
 const searchButton = document.querySelector('.search-button');
 const resetButton = document.querySelector('.reset-button');
-
+const loadingBarPercentage = document.querySelector('.loading-bar-percentage');
+const loadingBar = document.querySelector('.loading-bar');
 searchForm.addEventListener('submit', searchVideo);
 resetButton.addEventListener('submit', reset);
+
+ipcRenderer.on('update-percentage', (event, arg) => {
+  updateProgress(arg)
+})
 
 function searchVideo (event) {
   event.preventDefault();
@@ -47,6 +52,7 @@ function switchMode(isDownloading) {
     searchForm.removeEventListener('submit', searchVideo);
     searchForm.addEventListener('submit', downloadVideo);
     searchButton.textContent = 'Download';
+    searchButton.disabled = false;
     searchButton.classList.remove('disabled');
     resetButton.classList.remove('hidden');
   } else {
@@ -56,6 +62,7 @@ function switchMode(isDownloading) {
     searchButton.textContent = 'Test Video';
     resetButton.classList.add('hidden')
     searchForm.removeEventListener('submit', downloadVideo);
+    searchButton.disabled = false;
     searchButton.classList.remove('disabled');
     searchForm.addEventListener('submit', searchVideo);
   }
@@ -68,4 +75,10 @@ function setButtonToLoadingMode(element) {
   element.disabled = true;
   element.classList.add('disabled')
   element.append(spinnerElement);
+}
+
+function updateProgress(percentage) {
+  const percent = percentage + '%';
+  loadingBarPercentage.textContent = percent;
+  loadingBar.style.width = percent;
 }

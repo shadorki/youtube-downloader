@@ -45,6 +45,15 @@ button:hover {
   text-align: center;
 }
 
+.loading-bar-holder {
+  height: 1.2rem;
+}
+.loading-bar {
+  background-color: red;
+  width: 0%;
+  height: 100%;
+}
+
 @keyframes spinner {
   to {transform: rotate(360deg);}
 }

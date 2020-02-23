@@ -43,12 +43,13 @@ ipcMain.on('download-video', async (event, args) => {
         console.log('size: ' + info.size)
         fileSize = info.size;
       })
+      // Getting download progress
       let progress = 0;
       video.on('data', chunk => {
         progress += chunk.length;
         if(fileSize) {
         let percent = (progress / fileSize * 100).toFixed(2);
-        console.log(percent);
+        win.webContents.send('update-percentage', percent)
         }
       })
       const downloadLocation = fs.createWriteStream(`${filePath}/${args._filename}`)
