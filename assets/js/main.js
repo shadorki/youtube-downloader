@@ -1,4 +1,3 @@
-const axios = require('axios');
 const { ipcRenderer } = require('electron');
 const youtubedl = require('youtube-dl');
 
@@ -21,13 +20,6 @@ function searchVideo (event) {
     if(err) console.error(err);
     displayThumbnail(info);
   } )
-  // axios.get(`http://localhost:3001/video-info`, {
-  //   params: {
-  //     video: url
-  //   }
-  // })
-  // .then(displayThumbnail)
-  // .catch(err => console.error(err))
 }
 
 function downloadVideo(event) {

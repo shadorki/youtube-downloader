@@ -12,7 +12,6 @@ const { app, BrowserWindow, dialog, ipcMain } = electron;
 let win;
 
 function createWindow () {
-  // Create the browser window.
     win = new BrowserWindow({
     width: 800,
     height: 600,
@@ -21,7 +20,6 @@ function createWindow () {
     }
   })
 
-  // and load the index.html of the app.
   win.loadFile('index.html')
 }
 
@@ -34,9 +32,7 @@ ipcMain.on('download-video', async (event, args) => {
 
       console.log('selected directories', filePath);
       const video = youtubedl(args.webpage_url,
-        // Optional arguments passed to youtube-dl.
         ['--format=18'],
-        // Additional options can be given for calling `child_process.execFile()`.
         { cwd: __dirname })
 
       // Will be called when the download starts.
