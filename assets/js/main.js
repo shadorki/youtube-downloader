@@ -11,11 +11,13 @@ const resetButton = document.querySelector('.reset-button');
 const loadingBarPercentage = document.querySelector('.loading-bar-percentage');
 const loadingBar = document.querySelector('.loading-bar');
 searchForm.addEventListener('submit', searchVideo);
-resetButton.addEventListener('submit', reset);
+resetButton.addEventListener('click', reset);
 
 ipcRenderer.on('update-percentage', (event, arg) => {
   updateProgress(arg)
 })
+
+ipcRenderer.on('download-completed', downloadCompleted);
 
 function searchVideo (event) {
   event.preventDefault();
@@ -30,42 +32,42 @@ function searchVideo (event) {
 
 function downloadVideo(event) {
   event.preventDefault();
-  console.log('we downloadin boi')
+  resetButton.classList.add('hidden');
+  setButtonToLoadingMode(searchButton);
   ipcRenderer.send('download-video', (event, selectedVideo))
 }
 
 function displayThumbnail(response) {
   selectedVideo = response;
-  console.log(selectedVideo);
   const {title, thumbnail} = selectedVideo;
   thumbnailImage.src = thumbnail;
   thumbnailText.textContent = title;
-  switchMode(true);
+  switchMode();
 }
 function reset(event) {
   event.preventDefault();
-  switchMode(false);
+  thumbnailImage.src = "./assets/images/logo-youtube.png";
+  thumbnailText.textContent = '';
+  loadingBarPercentage.textContent = '';
+  loadingBar.style.width = '0%';
+  selectedVideo = null;
+  searchButton.textContent = 'Test Video';
+  resetButton.classList.add('hidden');
+  resetButton.textContent = 'Reset'
+  searchButton.classList.remove('hidden');
+  searchForm.removeEventListener('submit', downloadVideo);
+  searchButton.disabled = false;
+  searchButton.classList.remove('disabled');
+  searchForm.addEventListener('submit', searchVideo);
 }
 
-function switchMode(isDownloading) {
-  if(isDownloading) {
+function switchMode() {
     searchForm.removeEventListener('submit', searchVideo);
     searchForm.addEventListener('submit', downloadVideo);
     searchButton.textContent = 'Download';
     searchButton.disabled = false;
     searchButton.classList.remove('disabled');
     resetButton.classList.remove('hidden');
-  } else {
-    thumbnailImage.src = "./assets/images/logo-youtube.png";
-    thumbnailText.textContent = '';
-    selectedVideo = null;
-    searchButton.textContent = 'Test Video';
-    resetButton.classList.add('hidden')
-    searchForm.removeEventListener('submit', downloadVideo);
-    searchButton.disabled = false;
-    searchButton.classList.remove('disabled');
-    searchForm.addEventListener('submit', searchVideo);
-  }
 }
 
 function setButtonToLoadingMode(element) {
@@ -81,4 +83,10 @@ function updateProgress(percentage) {
   const percent = percentage + '%';
   loadingBarPercentage.textContent = percent;
   loadingBar.style.width = percent;
+}
+
+function downloadCompleted() {
+  resetButton.textContent = "Download Again?";
+  searchButton.classList.add('hidden');
+  resetButton.classList.remove('hidden');
 }

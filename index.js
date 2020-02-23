@@ -28,9 +28,11 @@ ipcMain.on('download-video', async (event, args) => {
       const result = await dialog.showOpenDialog(win, {
         properties: ['openDirectory']
       })
+      if(!result.filePaths.length) {
+        throw new Error('Please select a directory');
+      }
       const [filePath] = result.filePaths;
 
-      console.log('selected directories', filePath);
       const video = youtubedl(args.webpage_url,
         ['--format=18'],
         { cwd: __dirname })
@@ -38,9 +40,6 @@ ipcMain.on('download-video', async (event, args) => {
       // Will be called when the download starts.
       let fileSize = 0;
       video.on('info', info => {
-        console.log('Download started')
-        console.log('filename: ' + info._filename)
-        console.log('size: ' + info.size)
         fileSize = info.size;
       })
       // Getting download progress
@@ -51,6 +50,10 @@ ipcMain.on('download-video', async (event, args) => {
         let percent = (progress / fileSize * 100).toFixed(2);
         win.webContents.send('update-percentage', percent)
         }
+      })
+      // Download completed
+      video.on('end', () => {
+        win.webContents.send('download-completed')
       })
       const downloadLocation = fs.createWriteStream(`${filePath}/${args._filename}`)
       video.pipe(downloadLocation)
