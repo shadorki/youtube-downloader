@@ -5,10 +5,10 @@ body {
   justify-content: center;
   align-items: center;
 }
-.app-logo-container {
+.thumbnail-container {
   text-align: center;
 }
-.app-logo {
+.thumbnail {
   height: 150px;
 }
 .url-input {
