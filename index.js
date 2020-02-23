@@ -22,7 +22,4 @@ function createWindow () {
   // and load the index.html of the app.
   win.loadFile('index.html')
 }
-console.log(require.resolve('electron'))
-console.log(app)
-console.log(BrowserWindow)
 app.on('ready', createWindow)
