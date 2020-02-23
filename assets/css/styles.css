@@ -5,6 +5,14 @@ body {
   justify-content: center;
   align-items: center;
 }
+button {
+  border-style: none;
+  font-size: 1.2rem;
+  border-radius: 12px;
+  padding: 12px;
+  background-color: darkred;
+  color: white;
+}
 .thumbnail-container {
   text-align: center;
 }
@@ -27,15 +35,10 @@ body {
   margin-top: 1.2rem;
   text-align: center;
 }
-.search-button {
-  border-style: none;
-  font-size: 1.2rem;
-  border-radius: 12px;
-  padding: 12px;
-  background-color: darkred;
-  color: white;
-}
 .search-button:hover {
   background-color: red;
   cursor: pointer;
+}
+.hidden {
+  display: none;
 }
