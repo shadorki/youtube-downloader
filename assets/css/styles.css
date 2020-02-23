@@ -13,6 +13,10 @@ button {
   background-color: darkred;
   color: white;
 }
+button:hover {
+  background-color: red;
+  cursor: pointer;
+}
 .thumbnail-container {
   text-align: center;
 }
@@ -34,10 +38,6 @@ button {
 .search-button-container {
   margin-top: 1.2rem;
   text-align: center;
-}
-.search-button:hover {
-  background-color: red;
-  cursor: pointer;
 }
 .hidden {
   display: none;

@@ -7,7 +7,9 @@ const thumbnailImage = document.querySelector('.thumbnail');
 const thumbnailText = document.querySelector('.thumbnail-text');
 const searchButton = document.querySelector('.search-button');
 const resetButton = document.querySelector('.reset-button');
+
 searchForm.addEventListener('submit', searchVideo);
+resetButton.addEventListener('submit', reset);
 
 function searchVideo (event) {
   event.preventDefault();
@@ -32,6 +34,10 @@ function displayThumbnail(response) {
   thumbnailImage.src = thumbnail;
   thumbnailText.textContent = title;
   switchMode(true);
+}
+function reset(event) {
+  event.preventDefault();
+  switchMode(false);
 }
 
 function switchMode(isDownloading) {
