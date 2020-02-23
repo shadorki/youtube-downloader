@@ -36,10 +36,20 @@ ipcMain.on('download-video', async (event, args) => {
         { cwd: __dirname })
 
       // Will be called when the download starts.
-      video.on('info', function (info) {
+      let fileSize = 0;
+      video.on('info', info => {
         console.log('Download started')
         console.log('filename: ' + info._filename)
         console.log('size: ' + info.size)
+        fileSize = info.size;
+      })
+      let progress = 0;
+      video.on('data', chunk => {
+        progress += chunk.length;
+        if(fileSize) {
+        let percent = (progress / fileSize * 100).toFixed(2);
+        console.log(percent);
+        }
       })
       const downloadLocation = fs.createWriteStream(`${filePath}/${args._filename}`)
       video.pipe(downloadLocation)
