@@ -1,4 +1,6 @@
 const electron = require('electron');
+const youtubedl = require('youtube-dl');
+const fs = require('fs');
 
 require('electron-reload')(__dirname, {
   electron: require(`${__dirname}/node_modules/electron`)
@@ -28,7 +30,23 @@ ipcMain.on('download-video', async (event, args) => {
       const result = await dialog.showOpenDialog(win, {
         properties: ['openDirectory']
       })
-      console.log('selected directories', result.filePaths)
+      const [filePath] = result.filePaths;
+
+      console.log('selected directories', filePath);
+      const video = youtubedl(args.webpage_url,
+        // Optional arguments passed to youtube-dl.
+        ['--format=18'],
+        // Additional options can be given for calling `child_process.execFile()`.
+        { cwd: __dirname })
+
+      // Will be called when the download starts.
+      video.on('info', function (info) {
+        console.log('Download started')
+        console.log('filename: ' + info._filename)
+        console.log('size: ' + info.size)
+      })
+      const downloadLocation = fs.createWriteStream(`${filePath}/${args._filename}`)
+      video.pipe(downloadLocation)
     } catch (err) {
       console.error(err)
     }

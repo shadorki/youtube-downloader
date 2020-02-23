@@ -38,6 +38,7 @@ function downloadVideo(event) {
 
 function displayThumbnail(response) {
   selectedVideo = response;
+  console.log(selectedVideo);
   const {title, thumbnail} = selectedVideo;
   thumbnailImage.src = thumbnail;
   thumbnailText.textContent = title;
