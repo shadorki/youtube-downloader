@@ -1,16 +1,18 @@
-.container {
+body {
+  margin: 0;
+  height: 100vh;
   display: flex;
   justify-content: center;
+  align-items: center;
 }
 .app-logo-container {
   text-align: center;
 }
 .app-logo {
   height: 150px;
-  margin-top: 2rem;
 }
 .url-input {
-  border-radius: 20px;
+  border-radius: 10px;
   border-style: none;
   border: 1px solid black;
   font-size: 1.3rem;
@@ -28,7 +30,7 @@
 .search-button {
   border-style: none;
   font-size: 1.2rem;
-  border-radius: 25px;
+  border-radius: 12px;
   padding: 12px;
   background-color: darkred;
   color: white;
