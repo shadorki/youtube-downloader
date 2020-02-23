@@ -14,6 +14,7 @@ resetButton.addEventListener('submit', reset);
 
 function searchVideo (event) {
   event.preventDefault();
+  setButtonToLoadingMode(searchButton);
   const formData = new FormData(event.target);
   const url = formData.get('url');
   youtubedl.getInfo(url, null, (err, info) => {
@@ -46,6 +47,7 @@ function switchMode(isDownloading) {
     searchForm.removeEventListener('submit', searchVideo);
     searchForm.addEventListener('submit', downloadVideo);
     searchButton.textContent = 'Download';
+    searchButton.classList.remove('disabled');
     resetButton.classList.remove('hidden');
   } else {
     thumbnailImage.src = "./assets/images/logo-youtube.png";
@@ -54,6 +56,16 @@ function switchMode(isDownloading) {
     searchButton.textContent = 'Test Video';
     resetButton.classList.add('hidden')
     searchForm.removeEventListener('submit', downloadVideo);
+    searchButton.classList.remove('disabled');
     searchForm.addEventListener('submit', searchVideo);
   }
+}
+
+function setButtonToLoadingMode(element) {
+  const spinnerElement = document.createElement('i');
+  spinnerElement.classList.add('spinner');
+  element.textContent = '';
+  element.disabled = true;
+  element.classList.add('disabled')
+  element.append(spinnerElement);
 }
