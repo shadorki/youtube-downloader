@@ -4,10 +4,6 @@ const fs = require('fs');
 const template = require('./menu');
 const path = require('path');
 
-require('electron-reload')(__dirname, {
-  electron: require(`${__dirname}/node_modules/electron`)
-});
-
 
 const { app, BrowserWindow, dialog, ipcMain, Menu, nativeImage } = electron;
 
