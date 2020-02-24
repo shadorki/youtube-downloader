@@ -29,8 +29,6 @@ function createWindow () {
 
   win.setIcon(path.join(__dirname, '/assets/images/downloader-icon.ico'))
 
-  win.webContents.openDevTools();
-
   win.loadFile('index.html')
 }
 
