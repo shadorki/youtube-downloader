@@ -1,13 +1,18 @@
 const electron = require('electron');
 const youtubedl = require('youtube-dl');
 const fs = require('fs');
+const template = require('./menu');
 
 require('electron-reload')(__dirname, {
   electron: require(`${__dirname}/node_modules/electron`)
 });
 
 
-const { app, BrowserWindow, dialog, ipcMain } = electron;
+const { app, BrowserWindow, dialog, ipcMain, Menu } = electron;
+
+const menu = Menu.buildFromTemplate(template);
+
+Menu.setApplicationMenu(menu);
 
 let win;
 
