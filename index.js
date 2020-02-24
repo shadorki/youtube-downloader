@@ -2,13 +2,14 @@ const electron = require('electron');
 const youtubedl = require('youtube-dl');
 const fs = require('fs');
 const template = require('./menu');
+const path = require('path');
 
 require('electron-reload')(__dirname, {
   electron: require(`${__dirname}/node_modules/electron`)
 });
 
 
-const { app, BrowserWindow, dialog, ipcMain, Menu } = electron;
+const { app, BrowserWindow, dialog, ipcMain, Menu, nativeImage } = electron;
 
 const menu = Menu.buildFromTemplate(template);
 
@@ -16,14 +17,17 @@ Menu.setApplicationMenu(menu);
 
 let win;
 
+
 function createWindow () {
     win = new BrowserWindow({
     width: 800,
     height: 600,
     webPreferences: {
       nodeIntegration: true,
-    }
+    },
   })
+
+  win.setIcon(path.join(__dirname, '/assets/images/downloader-icon.ico'))
 
   win.loadFile('index.html')
 }
