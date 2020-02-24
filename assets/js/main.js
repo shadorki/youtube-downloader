@@ -28,11 +28,22 @@ function searchVideo (event) {
   const formData = new FormData(event.target);
   const url = formData.get('url');
   youtubedl.getInfo(url, null, (err, info) => {
-    if(err) console.error(err);
+    if(err) {
+      badLink();
+    } else {
     displayThumbnail(info);
+    }
   } )
 }
-
+function badLink() {
+  thumbnailImage.src = "./assets/images/confused-logo-youtube.png";
+  thumbnailText.textContent = 'The link you provided was invalid, please try again.';
+  searchButton.disabled = false;
+  urlInput.disabled = false;
+  urlInput.value = '';
+  searchButton.textContent = 'Test Video';
+  searchButton.classList.remove('disabled');
+}
 function downloadVideo(event) {
   event.preventDefault();
   resetButton.classList.add('hidden');
