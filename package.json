@@ -1,6 +1,6 @@
 {
   "name": "youtube-downloader",
-  "version": "0.0.1",
+  "version": "1.0.0",
   "description": "An electron application to download youtube videos",
   "main": "index.js",
   "scripts": {
@@ -19,13 +19,11 @@
   },
   "homepage": "https://github.com/uzair-ashraf/youtube-downloader#readme",
   "dependencies": {
-    "axios": "^0.19.2",
-    "electron": "^8.0.1",
-    "express": "^4.17.1",
     "youtube-dl": "^3.0.2"
   },
   "devDependencies": {
     "electron-reload": "^1.5.0",
+    "electron": "^8.0.1",
     "nodemon": "^2.0.2"
   }
 }
