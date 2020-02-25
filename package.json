@@ -5,8 +5,12 @@
   "main": "index.js",
   "scripts": {
     "start": "electron .",
-    "server": "nodemon server.js",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "package-win": "electron-packager . YoutubeDownloader --platform=win32 --arch=ia32 --icon=assets/images/downloader-icon.ico --prune=true --out=release-builds --version-string.CompanyName=bad-rabbit --version-string.FileDescription=youtube-downloader --version-string.ProductName=\"Youtube Downloader\""
+  },
+  "build": {
+    "appId": "08041994",
+    "icon": "/assets/images/downloader-icon.ico"
   },
   "repository": {
     "type": "git",
@@ -22,8 +26,8 @@
     "youtube-dl": "^3.0.2"
   },
   "devDependencies": {
-    "electron-reload": "^1.5.0",
     "electron": "^8.0.1",
-    "nodemon": "^2.0.2"
+    "electron-packager": "13.1.1",
+    "electron-reload": "^1.5.0"
   }
 }

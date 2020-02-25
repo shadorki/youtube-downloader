@@ -1,5 +1,4 @@
 const { ipcRenderer } = require('electron');
-const youtubedl = require('youtube-dl');
 
 let selectedVideo = null;
 
@@ -22,18 +21,16 @@ ipcRenderer.on('download-completed', downloadCompleted);
 
 ipcRenderer.on('directory-not-selected', resetDownload);
 
+ipcRenderer.on('bad-video-link', badLink);
+
+ipcRenderer.on('good-video-link', displayThumbnail);
+
 function searchVideo (event) {
   event.preventDefault();
   setButtonToLoadingMode(searchButton);
   const formData = new FormData(event.target);
   const url = formData.get('url');
-  youtubedl.getInfo(url, null, (err, info) => {
-    if(err) {
-      badLink();
-    } else {
-    displayThumbnail(info);
-    }
-  } )
+  ipcRenderer.send('get-video-info', url);
 }
 function badLink() {
   thumbnailImage.src = "./assets/images/confused-logo-youtube.png";
@@ -51,7 +48,7 @@ function downloadVideo(event) {
   ipcRenderer.send('download-video', (event, selectedVideo))
 }
 
-function displayThumbnail(response) {
+function displayThumbnail(event, response) {
   selectedVideo = response;
   urlInput.disabled = true;
   const {title, thumbnail} = selectedVideo;

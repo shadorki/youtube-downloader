@@ -28,6 +28,16 @@ function createWindow () {
   win.loadFile('index.html')
 }
 
+ipcMain.on('get-video-info', (event, args) => {
+  youtubedl.getInfo(args, null, (err, info) => {
+    if (err) {
+      win.webContents.send('bad-video-link', err);
+    } else {
+      win.webContents.send('good-video-link', info)
+    }
+  })
+})
+
 ipcMain.on('download-video', async (event, args) => {
     try {
       const result = await dialog.showOpenDialog(win, {
