@@ -1,4 +1,5 @@
 const { shell, BrowserWindow } = require('electron')
+const path = require('path');
 
 
 const isMac = process.platform === 'darwin'
@@ -61,6 +62,26 @@ const template = [
       { role: 'toggledevtools' },
     ]
   },
+  {
+    label: 'Troubleshooting',
+    submenu: [
+      {
+        label: 'Windows',
+        submenu: [
+          {
+            label: 'Error Code: 3221225781',
+            click: async () => {
+              try {
+                await shell.openItem(path.join(__dirname, 'assets/executables/vcredist_x86.exe'))
+              } catch(err) {
+                console.error(err);
+              }
+          }
+        }
+        ]
+      }
+    ]
+  }
 ]
 
 

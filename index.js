@@ -31,7 +31,7 @@ function createWindow () {
   win.loadFile('index.html')
 }
 
-ipcMain.on('get-video-info', (event, args) => {z
+ipcMain.on('get-video-info', (event, args) => {
   youtubedl.getInfo(args, null, (err, info) => {
     if (err) {
       win.webContents.send('bad-video-link', err);

@@ -32,7 +32,8 @@ function searchVideo (event) {
   const url = formData.get('url');
   ipcRenderer.send('get-video-info', url);
 }
-function badLink() {
+function badLink(event, error) {
+  console.error(error);
   thumbnailImage.src = "./assets/images/confused-logo-youtube.png";
   thumbnailText.textContent = 'The link you provided was invalid, please try again.';
   searchButton.disabled = false;
