@@ -52,7 +52,15 @@ const template = [
         }
       }
     ]
-  }
+  },
+  {
+    label: 'Development',
+    submenu: [
+      { role: 'reload' },
+      { role: 'forcereload' },
+      { role: 'toggledevtools' },
+    ]
+  },
 ]
 
 

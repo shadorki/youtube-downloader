@@ -4,6 +4,9 @@ const fs = require('fs');
 const template = require('./menu');
 const path = require('path');
 
+require('electron-reload')(__dirname, {
+  electron: path.join(__dirname, 'node_modules', '.bin', 'electron')
+});
 
 const { app, BrowserWindow, dialog, ipcMain, Menu, nativeImage } = electron;
 
@@ -28,7 +31,7 @@ function createWindow () {
   win.loadFile('index.html')
 }
 
-ipcMain.on('get-video-info', (event, args) => {
+ipcMain.on('get-video-info', (event, args) => {z
   youtubedl.getInfo(args, null, (err, info) => {
     if (err) {
       win.webContents.send('bad-video-link', err);
