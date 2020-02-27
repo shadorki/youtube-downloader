@@ -33,14 +33,20 @@ function searchVideo (event) {
   ipcRenderer.send('get-video-info', url);
 }
 function badLink(event, error) {
-  console.error(error);
+  console.log(error.stack)
   thumbnailImage.src = "./assets/images/confused-logo-youtube.png";
-  thumbnailText.textContent = 'The link you provided was invalid, please try again.';
   searchButton.disabled = false;
   urlInput.disabled = false;
-  urlInput.value = '';
+  searchButton.disabled = false;
   searchButton.textContent = 'Test Video';
   searchButton.classList.remove('disabled');
+  if(error.stack.includes('3221225781')) {
+    thumbnailText.innerHTML = `ERROR: Your computer is missing a dependency. <br>
+    Please click Troubleshooting > Windows > Error Code: 3221225781 <br>
+    After installing the dependency please restart this application.`;
+  } else {
+    thumbnailText.textContent = 'The link you provided was invalid, please try again.';
+  }
 }
 function downloadVideo(event) {
   event.preventDefault();
