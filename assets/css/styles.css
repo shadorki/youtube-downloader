@@ -59,6 +59,18 @@ button:hover {
   font-weight: bold;
   margin-top: 1.2rem;
 }
+.options-container {
+  text-align: center;
+  margin: 4px 0;
+  font-family: Arial, Helvetica, sans-serif;
+}
+
+#options {
+  border-radius: 10px;
+  border-style: none;
+  border: 1px solid black;
+  padding: 5px;
+}
 
 @keyframes spinner {
   to {transform: rotate(360deg);}

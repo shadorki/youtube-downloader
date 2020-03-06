@@ -2,6 +2,8 @@ const { ipcRenderer } = require('electron');
 
 let selectedVideo = null;
 
+let videoQuality = null;
+
 const searchForm = document.querySelector('.youtube-search-form');
 const thumbnailImage = document.querySelector('.thumbnail');
 const thumbnailText = document.querySelector('.thumbnail-text');
@@ -10,6 +12,8 @@ const searchButton = document.querySelector('.search-button');
 const resetButton = document.querySelector('.reset-button');
 const loadingBarPercentage = document.querySelector('.loading-bar-percentage');
 const loadingBar = document.querySelector('.loading-bar');
+const optionsDropdown = document.querySelector('.options-container');
+
 searchForm.addEventListener('submit', searchVideo);
 resetButton.addEventListener('click', reset);
 
@@ -30,6 +34,7 @@ function searchVideo (event) {
   setButtonToLoadingMode(searchButton);
   const formData = new FormData(event.target);
   const url = formData.get('url');
+  videoQuality = formData.get('options');
   ipcRenderer.send('get-video-info', url);
 }
 function badLink(event, error) {
@@ -52,10 +57,23 @@ function downloadVideo(event) {
   event.preventDefault();
   resetButton.classList.add('hidden');
   setButtonToLoadingMode(searchButton);
-  ipcRenderer.send('download-video', (event, selectedVideo))
+  let eventToSend = null;
+  switch(videoQuality) {
+    case "high":
+      eventToSend = 'download-high-quality-video'
+      break;
+    case "normal":
+      eventToSend = 'download-video';
+      break;
+    case "audio":
+      eventToSend = 'download-audio-only';
+      break;
+  }
+  ipcRenderer.send(eventToSend, (event, selectedVideo))
 }
 
 function displayThumbnail(event, response) {
+  optionsDropdown.classList.add('hidden')
   selectedVideo = response;
   urlInput.disabled = true;
   const {title, thumbnail} = selectedVideo;

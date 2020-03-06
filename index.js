@@ -52,7 +52,7 @@ ipcMain.on('download-video', async (event, args) => {
       const [filePath] = result.filePaths;
 
       const video = youtubedl(args.webpage_url,
-        ['--format=18'],
+        ['-x', '--audio-format', 'mp3'],
         { cwd: __dirname })
 
       // Will be called when the download starts.
@@ -73,9 +73,13 @@ ipcMain.on('download-video', async (event, args) => {
       video.on('end', () => {
         win.webContents.send('download-completed')
       })
+      video.on('error', err => {
+        throw new Error(err);
+      })
       const downloadLocation = fs.createWriteStream(`${filePath}/${args._filename}`)
       video.pipe(downloadLocation)
     } catch (err) {
+      console.error(err);
       win.webContents.send('directory-not-selected');
     }
 })
