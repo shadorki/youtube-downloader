@@ -57,19 +57,20 @@ function downloadVideo(event) {
   event.preventDefault();
   resetButton.classList.add('hidden');
   setButtonToLoadingMode(searchButton);
-  let eventToSend = null;
-  switch(videoQuality) {
-    case "high":
-      eventToSend = 'download-high-quality-video'
-      break;
-    case "normal":
-      eventToSend = 'download-video';
-      break;
-    case "audio":
-      eventToSend = 'download-audio-only';
-      break;
-  }
-  ipcRenderer.send(eventToSend, (event, selectedVideo))
+  console.log(checkQuality());
+  // let eventToSend = null;
+  // switch(videoQuality) {
+  //   case "high":
+  //     eventToSend = 'download-high-quality-video'
+  //     break;
+  //   case "normal":
+  //     eventToSend = 'download-video';
+  //     break;
+  //   case "audio":
+  //     eventToSend = 'download-audio-only';
+  //     break;
+  // }
+  // ipcRenderer.send(eventToSend, (event, selectedVideo))
 }
 
 function displayThumbnail(event, response) {
@@ -80,6 +81,28 @@ function displayThumbnail(event, response) {
   thumbnailImage.src = thumbnail;
   thumbnailText.textContent = title;
   switchMode();
+}
+function checkQuality() {
+  const { formats } = selectedVideo;
+
+  // Check if 1080 version exists in video
+  const format1080 = formats.find(video => {
+    return video.height === 1080 && video.ext === 'mp4'
+  })
+  if(!format1080) {
+    //If 1080 not found check if 720 version exists
+    const format720 = formats.find(video => {
+      return video.height === 720 && video.ext === 'mp4'
+    })
+
+    if(!format720) {
+      // If 720 format is not found return false
+      return false;
+    }
+    return format720;
+  }
+
+  return format1080;
 }
 function reset(event) {
   event.preventDefault();

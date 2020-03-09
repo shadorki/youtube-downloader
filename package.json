@@ -24,6 +24,7 @@
   "homepage": "https://github.com/uzair-ashraf/youtube-downloader#readme",
   "dependencies": {
     "fluent-ffmpeg": "^2.1.2",
+    "uuid": "^7.0.2",
     "youtube-dl": "^3.0.2"
   },
   "devDependencies": {
