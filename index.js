@@ -1,7 +1,9 @@
+require('dotenv').config();
 const electron = require('electron');
 const youtubedl = require('youtube-dl');
 const fs = require('fs');
 const template = require('./menu');
+const ffmpeg = require('fluent-ffmpeg');
 const path = require('path');
 
 require('electron-reload')(__dirname, {
@@ -15,6 +17,8 @@ const menu = Menu.buildFromTemplate(template);
 Menu.setApplicationMenu(menu);
 
 let win;
+
+console.log(process.env)
 
 
 function createWindow () {
@@ -81,6 +85,20 @@ ipcMain.on('download-video', async (event, args) => {
     } catch (err) {
       console.error(err);
       win.webContents.send('directory-not-selected');
+    }
+})
+
+ipcMain.on('download-high-quality-video', async (event, args) => {
+  try {
+      const result = await dialog.showOpenDialog(win, {
+        properties: ['openDirectory']
+      })
+      if(!result.filePaths.length) {
+        throw new Error('Please select a directory');
+      }
+      const [filePath] = result.filePaths;
+    } catch(err) {
+      console.error(err);
     }
 })
 

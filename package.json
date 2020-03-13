@@ -28,6 +28,7 @@
     "youtube-dl": "^3.0.2"
   },
   "devDependencies": {
+    "dotenv": "^8.2.0",
     "electron": "^8.0.1",
     "electron-packager": "13.1.1",
     "electron-reload": "^1.5.0"

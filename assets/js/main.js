@@ -57,20 +57,17 @@ function downloadVideo(event) {
   event.preventDefault();
   resetButton.classList.add('hidden');
   setButtonToLoadingMode(searchButton);
-  console.log(checkQuality());
-  // let eventToSend = null;
-  // switch(videoQuality) {
-  //   case "high":
-  //     eventToSend = 'download-high-quality-video'
-  //     break;
-  //   case "normal":
-  //     eventToSend = 'download-video';
-  //     break;
-  //   case "audio":
-  //     eventToSend = 'download-audio-only';
-  //     break;
-  // }
-  // ipcRenderer.send(eventToSend, (event, selectedVideo))
+  const quality = checkQuality();
+  let eventToSend = null;
+  if(videoQuality === "high" && quality) {
+    eventToSend = 'download-high-quality-video';
+    selectedVideo.selectedFormat = quality;
+  } else if(videoQuality === "normal") {
+    eventToSend = 'download-video';
+  } else {
+    eventToSend = "download-audio-only";
+  }
+  ipcRenderer.send(eventToSend, event, selectedVideo)
 }
 
 function displayThumbnail(event, response) {
